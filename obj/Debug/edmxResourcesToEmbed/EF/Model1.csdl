@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExamdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="course">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="duration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="instructor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="course1" Relationship="Self.FK_course_course" FromRole="course" ToRole="course1" />
+    <NavigationProperty Name="course2" Relationship="Self.FK_course_course" FromRole="course1" ToRole="course" />
+    <NavigationProperty Name="enrollments" Relationship="Self.FK_enrollment_course" FromRole="course" ToRole="enrollment" />
+  </EntityType>
+  <EntityType Name="enrollment">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="uid" Type="Int32" />
+    <Property Name="cid" Type="Int32" />
+    <NavigationProperty Name="course" Relationship="Self.FK_enrollment_course" FromRole="enrollment" ToRole="course" />
+    <NavigationProperty Name="user" Relationship="Self.FK_enrollment_user" FromRole="enrollment" ToRole="user" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="enrollments" Relationship="Self.FK_enrollment_user" FromRole="user" ToRole="enrollment" />
+  </EntityType>
+  <Association Name="FK_course_course">
+    <End Role="course" Type="Self.course" Multiplicity="1" />
+    <End Role="course1" Type="Self.course" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="course1">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_enrollment_course">
+    <End Role="course" Type="Self.course" Multiplicity="0..1" />
+    <End Role="enrollment" Type="Self.enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="course">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="enrollment">
+        <PropertyRef Name="cid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_enrollment_user">
+    <End Role="user" Type="Self.user" Multiplicity="0..1" />
+    <End Role="enrollment" Type="Self.enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="enrollment">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ExamdbEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="courses" EntityType="Self.course" />
+    <EntitySet Name="enrollments" EntityType="Self.enrollment" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <AssociationSet Name="FK_course_course" Association="Self.FK_course_course">
+      <End Role="course" EntitySet="courses" />
+      <End Role="course1" EntitySet="courses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_enrollment_course" Association="Self.FK_enrollment_course">
+      <End Role="course" EntitySet="courses" />
+      <End Role="enrollment" EntitySet="enrollments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_enrollment_user" Association="Self.FK_enrollment_user">
+      <End Role="user" EntitySet="users" />
+      <End Role="enrollment" EntitySet="enrollments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

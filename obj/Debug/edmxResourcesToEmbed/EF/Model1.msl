@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ExamdbModelStoreContainer" CdmEntityContainer="ExamdbEntities1">
+    <EntitySetMapping Name="courses">
+      <EntityTypeMapping TypeName="ExamdbModel.course">
+        <MappingFragment StoreEntitySet="course">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="cname" ColumnName="cname" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="instructor" ColumnName="instructor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="enrollments">
+      <EntityTypeMapping TypeName="ExamdbModel.enrollment">
+        <MappingFragment StoreEntitySet="enrollment">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="cid" ColumnName="cid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="ExamdbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
